@@ -50,27 +50,9 @@ is the machinery around the app: shell one-liners that ask the agent questions, 
 and a test protocol written by the agent, a program that scripts the agent, and a CI
 pipeline where the agent reviews every pull request.
 
-All of it drives the same binary. The svgbob source is in `images/headless-harness.bob`
-and the render in `images/headless-harness.svg`:
+All of it drives the same binary.
 
-```
-+--------------------+    +-----------------------+    +--------------------------+
-| claude             |    | "claude -p"           |    | "query() in a program"   |
-| "(the TUI)"        |    | "steps 26 to 31, 37"  |    | "steps 32 to 35"         |
-+---------+----------+    +-----------+-----------+    +------------+-------------+
-          |                           |                             |
-          | keyboard                  | "flags, stdin"              | "options, hooks"
-          v                           v                             v
-+-----------------------------------------------------------------------------------+
-| "Claude Code binary: agent loop, tools, permissions, hooks, sessions, skills"     |
-+----------------------------------------+------------------------------------------+
-                                         |
-                                         | "Anthropic Messages API"
-                                         v
-                  +----------------------------------------------+
-                  | "Model endpoint: Anthropic or OpenRouter"    |
-                  +----------------------------------------------+
-```
+![Headless harness diagram](images/headless-harness.svg)
 
 ## What we teach today
 
@@ -114,11 +96,6 @@ npm run dev
 
 Sign up at <http://localhost:3000/signup> and ask Bartholomew to put one thing on the
 list. Step 34 needs a chat to exist.
-
-`npm install` prints a block of `allow-scripts` warnings about `esbuild` and
-`@scarf/scarf`. Recent npm versions no longer run install scripts of dependencies unless
-you allow them. Nothing today needs those scripts, and the workspace `prepare` script
-that builds the CLI still runs.
 
 Step 31 needs the pi coding agent, and step 35 needs Docker:
 
