@@ -159,8 +159,9 @@ Now pipe something in. `npm audit` reports 13 advisories for the starter, one of
 high. Ask the agent which of them matter:
 
 ```bash
-npm audit --json | claude -p --tools "Read,Grep,Glob" \
-  "This is npm audit output for this repository. Which of these advisories can an attacker actually reach in this app, and which only affect build or dev tooling? Five lines at most."
+npm audit --json | claude -p \
+  "This is npm audit output for this repository. Which of these advisories can an attacker actually reach in this app, and which only affect build or dev tooling? Five lines at most." \
+  --tools "Read,Grep,Glob"
 ```
 
 Expect about 30 seconds and nine turns. The agent reads the audit JSON from stdin, then
@@ -316,7 +317,7 @@ for two follow-up questions.
 
 ```bash
 Q="Is there anything risky in app/api/todos? Keep it under 200 words."
-claude -p --tools "Read,Grep,Glob" "$Q"
+claude -p "$Q" --tools "Read,Grep,Glob"
 claude -p --tools "Read,Grep,Glob" \
   --append-system-prompt "You are a security engineer reviewing this codebase before a production release. Report vulnerabilities with severity, file:line, and a fix." "$Q"
 claude -p --safe-mode --tools "" \
